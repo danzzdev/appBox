@@ -34,7 +34,7 @@ public class MainMenuActivity extends AppCompatActivity {
         edit.putString("11","Voy a pasear al perro");
 
         edit.putString("2","Back away");
-        edit.putString("22","Tetroceder");
+        edit.putString("22","Retroceder");
 
         edit.putString("3","I'm starting to break away from the traditions I was raised in");
         edit.putString("33","Estoy comenzando a alejarme de las tradiciones con las que me criaron");
