@@ -40,12 +40,22 @@
             android:enabled="true"
             android:exported="true" />
 
+
         <activity android:name=".BoxInfActivity" />
 
         <service
             android:name=".CoverLockScreenService"
             android:enabled="true"
             android:exported="true"></service>
+
+        <activity android:name=".ExamActivity">
+
+        </activity>
+
+        <activity android:name=".WelcomeActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

@@ -59,8 +59,10 @@ public class MainMenuActivity extends AppCompatActivity {
         edit.putString("8","Back away-0");
         edit.putString("88","Tetroceder-0");
 
+
         edit.putString("9","I'm starting to break away from the traditions I was raised in-0");
         edit.putString("99","Estoy comenzando a alejarme de las tradiciones con las que me criaron-0");
+
 
         edit.putString("10","The train drew into the station-0");
         edit.putString("1010","El tren llegó a la estación-0");
