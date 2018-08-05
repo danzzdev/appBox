@@ -7,16 +7,26 @@ import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.IBinder;
 
+import java.util.LinkedList;
+
 public class TimeManagementService extends Service {
 
     private int cont;
     private Handler handler;
+    private int category;
+    private int contCategory;
+    private LinkedList listaA,listaB,listaC;
 
 
 
     public TimeManagementService() {
         cont=1;
         handler=new Handler();
+        category=1;
+        contCategory=1;
+        listaA=new LinkedList<String>();
+        listaB=new LinkedList<String>();
+        listaC=new LinkedList<String>();
     }
 
     @Override
@@ -42,23 +52,31 @@ public class TimeManagementService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(final Intent intent, int flags, int startId) {
         // TODO Auto-generated method stub
 
         final Runnable publicarframe=new Runnable() {
             @Override
             public void run() {
                 Intent intent11 = new Intent(getApplicationContext(), FrameDrawService.class);
+                intent11.putExtra("C",category);
+                if(category==3)
+                category=1;
+                else
+                category++;
+
+                intent11.putExtra("Ccont",contCategory);
+                intent11.putExtra("N",cont);
                 intent11.putExtra("N",cont);
                 cont++;
                 intent11.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                handler.postDelayed(this,20000);
+                handler.postDelayed(this,10000);
                 startService(intent11);
             }
         };
 
 
-        handler.postDelayed(publicarframe,20000);
+        handler.postDelayed(publicarframe,1000);
 
 
         return START_STICKY;

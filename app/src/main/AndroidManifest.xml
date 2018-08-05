@@ -38,6 +38,13 @@
         <service
             android:name=".FrameDrawService"
             android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".BoxInfActivity" />
+
+        <service
+            android:name=".CoverLockScreenService"
+            android:enabled="true"
             android:exported="true"></service>
     </application>
 
