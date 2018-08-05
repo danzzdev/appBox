@@ -2,6 +2,7 @@ package com.example.se.appbox;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.content.WakefulBroadcastReceiver;
@@ -15,12 +16,21 @@ public class ScreenReceiver extends WakefulBroadcastReceiver {
 
     public static boolean wasScreenOn = true;
 
+    //pref
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor edit;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
 
-            Intent intent11 = new Intent(context,FrameDrawService.class);
+            prefs = context.getSharedPreferences("CACHESD", Context.MODE_PRIVATE);
+            edit=prefs.edit();
 
+
+            Intent intent11 = new Intent(context,CoverLockScreenService.class);
+            edit.putBoolean("BLOQ",true);
+            edit.commit();
 
             wasScreenOn=false;
             if(((TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE)).getCallState() == 0)
@@ -48,7 +58,7 @@ public class ScreenReceiver extends WakefulBroadcastReceiver {
         }
         else if(intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED))
         {
-            Intent intent11 = new Intent(context, FrameDrawService.class);
+            Intent intent11 = new Intent(context, CoverLockScreenService.class);
             intent11.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startWakefulService(context, intent11);
             //context.startService(intent11);

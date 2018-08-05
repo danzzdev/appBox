@@ -2,8 +2,10 @@ package com.example.se.appbox;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
 
@@ -16,6 +18,10 @@ public class TimeManagementService extends Service {
     private int category;
     private int contCategory;
     private LinkedList listaA,listaB,listaC;
+
+    //pref
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor edit;
 
 
 
@@ -40,6 +46,10 @@ public class TimeManagementService extends Service {
 
     @Override
     public void onCreate() {
+
+        prefs = getSharedPreferences("CACHESD", Context.MODE_PRIVATE);
+        edit=prefs.edit();
+
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
 
@@ -48,6 +58,8 @@ public class TimeManagementService extends Service {
 
         mReceiver = new ScreenReceiver();
         registerReceiver(mReceiver, filter);
+
+
         super.onCreate();
     }
 
@@ -71,6 +83,7 @@ public class TimeManagementService extends Service {
                 cont++;
                 intent11.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 handler.postDelayed(this,10000);
+                if(!prefs.getBoolean("BLOQ",false))
                 startService(intent11);
             }
         };

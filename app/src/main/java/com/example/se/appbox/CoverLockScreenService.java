@@ -1,14 +1,24 @@
 package com.example.se.appbox;
 
 import android.animation.Animator;
+import android.app.AlertDialog;
 import android.app.Service;
+import android.app.admin.DevicePolicyManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -46,13 +56,17 @@ public class CoverLockScreenService extends Service {
     private SharedPreferences prefs;
     private SharedPreferences.Editor edit;
 
-    public CoverLockScreenService() {
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
+
+
 
     @Override
     public void onCreate() {
         super.onCreate();
-
         prefs = getSharedPreferences("CACHESD", Context.MODE_PRIVATE);
         edit=prefs.edit();
 
@@ -104,12 +118,27 @@ public class CoverLockScreenService extends Service {
                 return true;
             }
         });
+
+
+
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+
+        String c=intent.getIntExtra("N",99999)+"";
+        String frase1=prefs.getString(c,"Frase por defecto 1");
+        String frase2=prefs.getString(c+c,"Frase por defecto 2");
+        int nuevacategoria=Integer.parseInt(prefs.getString("C","999"))+1;
+
+        edit.putString(c+"A",frase1);
+        //label1.setText(frase1);
+        //label2.setText(frase2);
+
+
+
+        return START_NOT_STICKY;
     }
 
     public void cargarCover()
@@ -118,8 +147,8 @@ public class CoverLockScreenService extends Service {
         this.winManager = ((WindowManager)getApplicationContext().getSystemService(WINDOW_SERVICE));
         this.wrapperView = new RelativeLayout(getBaseContext());
         WindowManager.LayoutParams handleParams = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.TYPE_SYSTEM_ERROR,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                         WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL |
@@ -128,8 +157,8 @@ public class CoverLockScreenService extends Service {
         );
         handleParams.gravity = Gravity.TOP;
         this.winManager.addView(this.wrapperView, handleParams);
-        View.inflate(getApplicationContext(), R.layout.layout_frame, this.wrapperView);
-        lay=(LinearLayout)wrapperView.findViewById(R.id.framelayout);
+        View.inflate(getApplicationContext(), R.layout.layout_cover, this.wrapperView);
+        lay=(LinearLayout)wrapperView.findViewById(R.id.coverid);
         lay.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -138,6 +167,11 @@ public class CoverLockScreenService extends Service {
                 return true;
             }
         });
+
+        Bitmap backgroundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.fondo);
+        BitmapDrawable bd = new BitmapDrawable(backgroundBitmap);
+        lay.setBackgroundDrawable(bd);
+
         Point punto=new Point();
         winManager.getDefaultDisplay().getSize(punto);
         ancho=punto.x;
@@ -153,7 +187,6 @@ public class CoverLockScreenService extends Service {
         animador.translationX(ancho);
         animador.start();
     }
-
     public void setAnimation()
     {
         //Animacion
@@ -169,6 +202,8 @@ public class CoverLockScreenService extends Service {
 
                 wrapperView.setVisibility(View.GONE);
                 //finish();
+                edit.putBoolean("BLOQ",false);
+                edit.commit();
                 stopSelf();
             }
 
@@ -184,4 +219,20 @@ public class CoverLockScreenService extends Service {
         });
 
     }
+
+    public void warnigndialog()
+    {
+
+        Intent i=new Intent(CoverLockScreenService.this,BoxInfActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startEndingAnimation();
+        startActivity(i);
+
+    }
+
+    public void warnigndialog2()
+    {
+
+    }
 }
+

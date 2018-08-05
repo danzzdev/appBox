@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/coverid"
+    android:background="#000">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center">
+        <DigitalClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:alpha="0.6"
+        android:padding="5dp"
+        android:background="@drawable/background_boxscreen"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        <TextView
+            android:id="@+id/img1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/waiter"/>
+        <TextView
+            android:alpha="1"
+            android:gravity="center"
+            android:id="@+id/txt1"
+            android:layout_toRightOf="@+id/img1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ask the waiter for the check"
+            android:textSize="25dp"
+            android:textColor="#ffffff"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/background_boxscreen"/>
+        <TextView
+            android:alpha="1"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:layout_below="@+id/txt1"
+            android:layout_toRightOf="@+id/img1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Pregúntale al camarero por la cuenta"
+            android:textSize="25dp"
+            android:background="@drawable/background_boxscreen"/>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"/>
+</LinearLayout>
