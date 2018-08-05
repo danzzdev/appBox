@@ -130,8 +130,8 @@ public class FrameDrawService extends Service {
         };
 
         String c=intent.getIntExtra("N",99999)+"";
-        String frase1=prefs.getString(c,"Frase por defecto 1");
-        String frase2=prefs.getString(c+c,"Frase por defecto 2");
+        String frase1=prefs.getString("A"+c,"Frase por defecto 1");
+        String frase2=prefs.getString("B"+c,"Frase por defecto 2");
         int nuevacategoria=Integer.parseInt(prefs.getString("C","999"))+1;
 
         edit.putString(c+"A",frase1);

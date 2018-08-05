@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -13,8 +14,10 @@ public class BoxInfActivity extends AppCompatActivity {
     private String txt2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_box_inf);
+        getSupportActionBar().hide();
 
         txt1="Resource: Recurso ";
         txt2="A stock or supply of money, materials, staff, and other assets that can be drawn on by a person or organization in order to function effectively.";
