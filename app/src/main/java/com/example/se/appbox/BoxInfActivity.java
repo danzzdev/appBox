@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,41 +53,18 @@ public class BoxInfActivity extends AppCompatActivity {
                 }
             }
         });
-        Button dos = (Button)this.findViewById(R.id.buttonNo);
-        dos.setOnClickListener(new View.OnClickListener(){
 
-            public void onClick(View v) {
-                System.out.println("--------------------Enviar not");
-                notifyThis("Hola","Msj notification");
+        Runnable notification=new Runnable() {
+            @Override
+            public void run() {
+                notifyThis("¿Estás en tu tiempo libre?",":D Es hora de saber cuanto has aprendido durante el día.");
             }
-        });
+        };
 
+        new Handler().postDelayed(notification,7000);
 
     }
 
-    private  void sendNotification(){
-        System.out.println("--------------------Enviar not inside method");
-
-        Intent intent = new Intent(this, BoxInfActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        NotificationCompat.Builder b = new NotificationCompat.Builder(this);
-
-        b.setAutoCancel(true)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.waiter)
-                .setTicker("Hearty365")
-                .setContentTitle("Default notification")
-                .setContentText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
-                .setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_SOUND)
-                .setContentIntent(contentIntent)
-                .setContentInfo("Info");
-
-
-        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1, b.build());
-    }
 
     public void notifyThis(String title, String message) {
         NotificationCompat.Builder b = new NotificationCompat.Builder(this);
@@ -94,11 +72,10 @@ public class BoxInfActivity extends AppCompatActivity {
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
                 .setSmallIcon(R.drawable.fondo)
-                .setTicker("{your tiny message}")
+                .setTicker("Hora de tu leeción")
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentInfo("INFO");
-        System.out.println("--------------------Enviar notify this inside method");
 
         NotificationManager nm = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(1, b.build());
