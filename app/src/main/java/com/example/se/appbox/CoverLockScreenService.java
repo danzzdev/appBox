@@ -226,7 +226,7 @@ public class CoverLockScreenService extends Service {
         Intent i=new Intent(CoverLockScreenService.this,BoxInfActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startEndingAnimation();
-        startActivity(i);
+        //startActivity(i);
 
     }
 

@@ -29,8 +29,7 @@ public class ScreenReceiver extends WakefulBroadcastReceiver {
 
 
             Intent intent11 = new Intent(context,CoverLockScreenService.class);
-            edit.putBoolean("BLOQ",true);
-            edit.commit();
+
 
             wasScreenOn=false;
             if(((TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE)).getCallState() == 0)
@@ -50,7 +49,12 @@ public class ScreenReceiver extends WakefulBroadcastReceiver {
                         Settings.System.putInt(context.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
                     }
                 }
-                startWakefulService(context, intent11);
+                if(prefs.getBoolean("LOCK",false))
+                {
+                    edit.putBoolean("BLOQ",true);
+                    edit.commit();
+                    startWakefulService(context, intent11);
+                }
                 //context.startService(intent11);
             }
         } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
