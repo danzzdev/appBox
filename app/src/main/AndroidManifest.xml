@@ -38,7 +38,15 @@
         <service
             android:name=".FrameDrawService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".ExamActivity">
+
+        </activity>
+
+        <activity android:name=".WelcomeActivity">
+
+        </activity>
     </application>
 
 </manifest>
